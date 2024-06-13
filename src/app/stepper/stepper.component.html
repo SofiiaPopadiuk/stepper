@@ -1,0 +1,24 @@
+<div class="stepper" [ngClass]="direction">
+  <div *ngFor="let step of steps; let row = index">
+    <div class="stepper__row row">
+      <div
+        *ngFor="let step of steps; let i = index"
+        [ngClass]="{
+          'step--active': isStepActive(i, row),
+          'step--passed': isPassedStep(i, row),
+          'step--unselected': isUnselectedStep(i, row),
+          'step--activeUnselected': isUnselectedStep(i, row) && unselectedRow === i,
+          'step--passedUnselected': isUnselectedStep(i, row) && i < unselectedRow,
+          'step': true
+        }"
+        [ngStyle]=" {'flex-basis': 'calc(100% / steps.length)'}"
+      >
+        <span class="step__label">{{ step.label }}</span>
+        <div class="step__progress progress">
+          <div class="progress__line" [ngStyle]="{'animation-delay': getAnimationDelay(i,row)}"></div>
+          <span class="progress__icon">{{ getStepIcon(i, row)}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Outfit';
+  src: url('../assets/Outfit-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 20px;
+}
+
+button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}

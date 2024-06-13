@@ -1,0 +1,192 @@
+@import './scss/variables';
+@import './scss/animations';
+
+// Dynamic root variable
+// we could use just [ngStyle] to set color from .ts file, but in case we will use it in more components,
+// it will require a lot of code inside html
+:root {
+  --active: #22ECE9;
+}
+
+.stepper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  margin: 20px;
+  padding: 20px;
+  background-color: $black;
+
+  &.horizontal {
+    display: flex;
+    // I saw that when stepper has 4 steps it is wider, but size wasn`t changed propotional with steps size,
+    // so I left 840px for both as didn`t understand a logic
+    max-width: 840px;
+  }
+  
+  .row {
+    height: 54px;
+    display: flex;
+  
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      flex-grow: 1;
+      flex-shrink: 0;
+  
+      &__label {
+        color: $default-text;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+      }
+  
+      &__progress {
+        display: flex;
+        width: 100%;
+        height: 20px;
+        align-items: center;
+        position: relative;
+  
+        .progress {
+          &__icon {
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: calc(50% - 10px);
+            text-align: center;
+            border: 1px solid $grey;
+            border-radius: 50%;
+            color: $grey-light;
+            background-color: $grey-dark;
+            line-height: 20px;
+            font-size: 10px;
+          }
+
+          &__line {
+            height: 4px;
+          }
+        }
+      }
+
+      &--active {
+        .step__label {
+          color: $active-text;
+        }
+
+        .progress {
+          &__line {
+            background: var(--active);
+            animation: run 1s linear forwards;
+          }
+
+          &__icon {
+            border: 1px solid var(--active);
+            background: var(--active);
+            color: $black;
+          }
+        }
+      }
+
+      &--passed {
+        .progress {
+          &__line {
+            background: $grey-dark;
+            animation: run 1s linear forwards;
+          }
+
+          &__icon {
+            border: 0px;
+            background: $grey-dark;
+            color: $default-text;
+            font-size: 16px;
+          }
+        }
+      }
+
+      &--unselected {
+        .progress {
+          &__line {
+            width: 100%;
+            animation: run-back 1s linear forwards;
+          }
+        }
+      }
+
+      &--activeUnselected {
+        .progress {
+          &__line {
+            background: var(--active);
+          }
+        }
+      }
+
+      &--passedUnselected {
+        .progress {
+          &__line {
+            background: $grey-dark;
+          }
+        }
+      }
+    }
+  }
+
+  &.vertical {
+    flex-direction: row;
+    height: 840px;
+    max-width: fit-content;
+  
+    .row {
+      flex-flow: column;
+      height: 100%;
+      width: 54px;
+
+      .step {
+        width: 100%;
+        flex-direction: row;
+
+        &__label {
+          writing-mode: vertical-lr;
+          transform: rotate(180deg);
+        }
+
+        &__progress {
+          height: 100%;
+          justify-content: center;
+          align-items: normal;
+
+          .progress {
+            &__line {
+              width: 4px;
+            }
+
+            &__icon {
+              align-self: center;
+              transform: rotate(-90deg);
+            }
+          }
+        }
+
+        &--active,
+        &--passed {
+            .progress {
+            &__line {
+              animation: run-vertical 1s linear forwards;
+            }
+          }
+        }
+
+        &--unselected {
+          .progress {
+            &__line {
+              height: 100%;
+              animation: run-back-vertical 1s linear forwards;
+            }
+          }
+        }
+      }
+    }
+  }
+}
